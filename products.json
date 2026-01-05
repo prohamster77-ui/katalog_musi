@@ -22,5 +22,13 @@
         "harga": "Rp 30.000",
         "stok": "Tersedia 600 pcs",
         "gambar": "https://via.placeholder.com/150"
+    },
+    {
+        "id": 4,
+        "nama": "Asoy jumbo",
+        "kategori": "Asoy",
+        "harga": "Rp 50.000",
+        "stok": "67 PCS",
+        "gambar": "https://via.placeholder.com/150"
     }
 ]
