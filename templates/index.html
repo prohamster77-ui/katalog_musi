@@ -10,28 +10,45 @@
         .stok-tersedia { color: green; font-weight: bold; }
         .stok-habis { color: red; font-weight: bold; }
         .badge-kategori { font-size: 0.8rem; background-color: #f8f9fa; color: #6c757d; border: 1px solid #dee2e6; }
+        .harga-asli { font-size: 0.85rem; color: #adb5bd; text-decoration: line-through; }
+        .diskon-label { position: absolute; top: 10px; right: 10px; background-color: #dc3545; color: white; padding: 2px 8px; border-radius: 5px; font-weight: bold; font-size: 0.9rem; }
     </style>
 </head>
 <body class="bg-light">
 
-<nav class="navbar navbar-dark bg-dark mb-4">
+<nav class="navbar navbar-dark bg-dark mb-4 shadow">
     <div class="container">
         <span class="navbar-brand mb-0 h1">Musi Baru - Katalog Toko</span>
     </div>
 </nav>
 
-<div class="container">
+<div class="container mb-5">
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for p in products %}
         <div class="col">
-            <div class="card h-100 shadow-sm">
+            <div class="card h-100 shadow-sm border-0 position-relative">
+                
+                {% if p.diskon > 0 %}
+                <div class="diskon-label">-{{ p.diskon }}%</div>
+                {% endif %}
+
                 <img src="{{ p.gambar }}" class="card-img-top" alt="{{ p.nama }}">
+                
                 <div class="card-body">
                     <span class="badge badge-kategori mb-2">{{ p.kategori }}</span>
                     <h5 class="card-title">{{ p.nama }}</h5>
-                    <p class="card-text text-primary fs-5 fw-bold">{{ p.harga }}</p>
-                    <p class="card-text">
-                        Status: 
+                    
+                    <div class="mt-2 mb-3">
+                        {% if p.diskon > 0 %}
+                            <div class="harga-asli">{{ p.harga_asli }}</div>
+                            <div class="text-danger fs-5 fw-bold">{{ p.harga }}</div>
+                        {% else %}
+                            <div class="text-primary fs-5 fw-bold mt-3">{{ p.harga }}</div>
+                        {% endif %}
+                    </div>
+
+                    <p class="card-text border-top pt-2">
+                        <small class="text-muted">Status:</small> 
                         <span class="{{ 'stok-tersedia' if p.stok == 'Tersedia' else 'stok-habis' }}">
                             {{ p.stok }}
                         </span>

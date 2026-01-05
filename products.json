@@ -4,6 +4,8 @@
         "nama": "Karung",
         "kategori": "Karung",
         "harga": "Rp 25.000",
+        "harga asli": "Rp 30.000",
+        "diskon": 10,
         "stok": "Tersedia",
         "gambar": "https://via.placeholder.com/150"
     },
