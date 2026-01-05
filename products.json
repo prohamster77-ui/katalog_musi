@@ -1,8 +1,8 @@
 [
     {
         "id": 1,
-        "nama": "Pakan Hamster Biji-bijian",
-        "kategori": "Makanan",
+        "nama": "Asoy",
+        "kategori": "Asoy",
         "harga": "Rp 15.000",
         "harga_asli": "Rp 20.000",
         "diskon": 25,
@@ -11,11 +11,11 @@
     },
     {
         "id": 2,
-        "nama": "Kandang Plastik Mini",
-        "kategori": "Kandang",
+        "nama": "PP",
+        "kategori": "PP",
         "harga": "Rp 45.000",
-        "harga_asli": "",
-        "diskon": 0,
+        "harga_asli": "Rp 50.000",
+        "diskon": 10,
         "stok": "Habis",
         "gambar": "https://via.placeholder.com/150"
     }
