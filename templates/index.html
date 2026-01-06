@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog Toko Hamster - Musi Baru</title>
+    <title>Katalog Toko Plastik - Musi Baru</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         body {
             font-family: 'Nunito', sans-serif;
-            background-color: #f3f4f6; /* Abu-abu sangat muda/modern */
+            background-color: #f3f4f6;
             color: #333;
         }
 
-        /* Navbar Styling */
         .navbar {
             background-color: #ffffff;
             border-bottom: 1px solid #eee;
@@ -25,22 +24,19 @@
             letter-spacing: -0.5px;
         }
 
-        /* Card Styling */
         .card {
             border: none;
             border-radius: 16px;
             background: #fff;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            overflow: hidden; /* Penting untuk efek zoom gambar */
+            overflow: hidden;
         }
 
-        /* Efek Hover Card: Melayang & Shadow */
         .card:hover {
             transform: translateY(-8px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
         }
 
-        /* Image Wrapper & Zoom Effect */
         .img-wrapper {
             height: 220px;
             overflow: hidden;
@@ -54,16 +50,14 @@
             transition: transform 0.5s ease;
         }
 
-        /* Zoom gambar saat hover card */
         .card:hover .card-img-top {
             transform: scale(1.1);
         }
 
-        /* Label Diskon Modern */
         .diskon-badge {
             position: absolute;
             top: 12px;
-            left: 12px; /* Pindah ke kiri atas agar lebih eye-catching */
+            left: 12px;
             background: rgba(220, 53, 69, 0.9);
             backdrop-filter: blur(4px);
             color: white;
@@ -75,7 +69,6 @@
             z-index: 2;
         }
 
-        /* Kategori Badge */
         .badge-kategori {
             font-size: 0.75rem;
             background-color: #e9ecef;
@@ -85,7 +78,6 @@
             border-radius: 8px;
         }
 
-        /* Typography Harga */
         .card-title {
             font-weight: 700;
             font-size: 1.1rem;
@@ -106,11 +98,8 @@
             color: #2d3436;
         }
         
-        .text-diskon {
-            color: #e63946; /* Merah modern */
-        }
+        .text-diskon { color: #e63946; }
 
-        /* Status Stok Indikator */
         .status-indicator {
             display: inline-block;
             width: 8px;
@@ -128,6 +117,37 @@
         .text-tersedia { color: #27ae60; }
         .text-habis { color: #c0392b; }
 
+        /* --- [BARU] STYLE UNTUK TOMBOL FILTER TOKO --- */
+        .filter-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-filter {
+            border: 2px solid #dee2e6;
+            background: white;
+            color: #6c757d;
+            border-radius: 50px; /* Bentuk Pil */
+            padding: 8px 24px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-filter:hover {
+            border-color: #333;
+            color: #333;
+        }
+        
+        .btn-filter.active {
+            background-color: #333;
+            border-color: #333;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        /* ------------------------------------------- */
+
     </style>
 </head>
 <body>
@@ -135,7 +155,7 @@
 <nav class="navbar navbar-expand-lg sticky-top shadow-sm">
     <div class="container">
         <span class="navbar-brand">
-            🐹 Musi Baru <span class="fw-light text-muted fs-6">| Katalog</span>
+            Toko Plastik Musi Baru <span class="fw-light text-muted fs-6">| Katalog</span>
         </span>
     </div>
 </nav>
@@ -143,14 +163,23 @@
 <div class="container my-5">
     <div class="row mb-4">
         <div class="col-12 text-center">
-            <h2 class="fw-bold mb-2">Koleksi Kami</h2>
-            <p class="text-muted">Temukan perlengkapan hamster terbaik di sini</p>
-        </div>
+            <h2 class="fw-bold mb-2">Katalog Kami</h2>
+            <p class="text-muted">Pilih cabang toko untuk melihat stok yang tersedia</p>
+            
+            <div class="filter-btn-group mt-4">
+    <button class="btn btn-filter active" data-filter="all">Semua Cabang</button>
+    <button class="btn btn-filter" data-filter="Sekayu">Mexs Sekayu</button>
+    <button class="btn btn-filter" data-filter="Kemuning">Kemuning</button>
+    <button class="btn btn-filter" data-filter="KM5">KM 5</button>
+    <button class="btn btn-filter" data-filter="Simpang Patal">Simpang Patal</button>
+    <button class="btn btn-filter" data-filter="Prabumulih">Prabumulih</button>
+</div>
+            </div>
     </div>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="product-container">
         {% for p in products %}
-        <div class="col">
+        <div class="col product-item" data-toko="{{ p.toko }}">
             <div class="card h-100 shadow-sm">
                 
                 <div class="img-wrapper">
@@ -162,8 +191,9 @@
                 </div>
                 
                 <div class="card-body d-flex flex-column">
-                    <div class="mb-2">
+                    <div class="mb-2 d-flex justify-content-between align-items-center">
                         <span class="badge badge-kategori">{{ p.kategori }}</span>
+                        <small class="text-muted" style="font-size: 0.7rem;">📍 {{ p.toko }}</small>
                     </div>
                     
                     <h5 class="card-title text-truncate" title="{{ p.nama }}">{{ p.nama }}</h5>
@@ -195,5 +225,45 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const filterBtns = document.querySelectorAll('.btn-filter');
+        const productItems = document.querySelectorAll('.product-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 1. Hapus kelas 'active' dari semua tombol, tambah ke tombol yang diklik
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // 2. Ambil nilai filter (misal: "Cabang Palembang" atau "all")
+                const filterValue = btn.getAttribute('data-filter');
+
+                // 3. Loop semua produk untuk cek apakah harus ditampilkan atau disembunyikan
+                productItems.forEach(item => {
+                    const itemToko = item.getAttribute('data-toko');
+
+                    if (filterValue === 'all' || filterValue === itemToko) {
+                        // Tampilkan dengan animasi fade in
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 50);
+                    } else {
+                        // Sembunyikan
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300); // Tunggu animasi selesai baru hilang
+                    }
+                });
+            });
+        });
+    });
+</script>
+
 </body>
 </html>
